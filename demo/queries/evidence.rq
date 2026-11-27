@@ -1,0 +1,13 @@
+PREFIX kg: <https://example.org/curriculum-workforce/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?course ?assessment ?requirement ?status ?source ?evidence ?limitation
+WHERE {
+  ?record a kg:Assessment ;
+          rdfs:label ?assessment ;
+          kg:course/rdfs:label ?course ;
+          kg:requirement/rdfs:label ?requirement ;
+          kg:status ?status ;
+          kg:evidence [ kg:sourceType ?source ; kg:text ?evidence ] ;
+          kg:limitation ?limitation .
+}
+ORDER BY ?course ?assessment

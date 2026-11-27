@@ -1,0 +1,17 @@
+@prefix kg: <https://example.org/curriculum-workforce/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+kg:AssessmentShape
+    a sh:NodeShape ;
+    sh:targetClass kg:Assessment ;
+    sh:property [ sh:path kg:course ; sh:class kg:Course ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path kg:requirement ; sh:class kg:Requirement ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path kg:status ; sh:in ("supported" "partial" "related") ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path kg:evidence ; sh:class kg:Evidence ; sh:minCount 1 ; sh:maxCount 1 ] .
+
+kg:EvidenceShape
+    a sh:NodeShape ;
+    sh:targetClass kg:Evidence ;
+    sh:property [ sh:path kg:sourceType ; sh:minLength 1 ; sh:datatype xsd:string ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path kg:text ; sh:minLength 1 ; sh:datatype xsd:string ; sh:minCount 1 ; sh:maxCount 1 ] .

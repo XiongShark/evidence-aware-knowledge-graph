@@ -1,0 +1,7 @@
+PREFIX kg: <https://example.org/curriculum-workforce/>
+SELECT (COUNT(DISTINCT ?assessment) AS ?assessments)
+       (COUNT(DISTINCT ?requirement) AS ?requirements)
+WHERE {
+  ?assessment a kg:Assessment ;
+              kg:requirement ?requirement .
+}

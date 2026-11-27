@@ -1,0 +1,24 @@
+{
+  "courses": [
+    {"id": "c1", "label": "Marketing Analytics", "summary": "Interpreting campaign performance through quantitative indicators."},
+    {"id": "c2", "label": "Social Media Strategy", "summary": "Planning and analysing communication across social channels."},
+    {"id": "c3", "label": "Web Foundations", "summary": "Learning how web pages are structured and presented."}
+  ],
+  "requirements": [
+    {"id": "r1", "label": "Campaign measurement", "summary": "Evaluate campaign performance and use the results to improve it."},
+    {"id": "r2", "label": "Social channel management", "summary": "Develop a channel strategy and carry it out in an operating environment."},
+    {"id": "r3", "label": "Website maintenance", "summary": "Update a production site while following an editorial workflow."}
+  ],
+  "assessments": [
+    {"id": "a1", "course": "c1", "requirement": "r1", "status": "supported", "label": "Evaluate performance", "source": "Practice task", "evidence": "Calculate a conversion rate from sample campaign data and explain what the result indicates.", "limit": "The task supports evaluating performance in a bounded setting."},
+    {"id": "a2", "course": "c1", "requirement": "r1", "status": "partial", "label": "Optimise a campaign", "source": "Practice task", "evidence": "Interpret the relative performance of two sets of sample results.", "limit": "The example provides no evidence of running and monitoring a live intervention."},
+    {"id": "a3", "course": "c2", "requirement": "r2", "status": "partial", "label": "Analyse channel strategy", "source": "Learning outcome", "evidence": "Compare channel choices for a hypothetical target audience.", "limit": "The activity demonstrates strategic analysis within a teaching scenario."},
+    {"id": "a4", "course": "c2", "requirement": "r2", "status": "partial", "label": "Operate a social channel", "source": "Learning outcome", "evidence": "Explain when to adapt the message and schedule for a different channel.", "limit": "Ongoing publishing, moderation and operational responsibility require further evidence."},
+    {"id": "a5", "course": "c3", "requirement": "r3", "status": "related", "label": "Update a production site", "source": "Topic outline", "evidence": "The outline introduces page structure and presentation.", "limit": "The topic is relevant background. Production editing and approvals need separate evidence."}
+  ],
+  "levels": [
+    {"level": 1, "source": "Catalogue description", "action": "Recognise", "text": "The course introduces common campaign performance indicators.", "reason": "The description establishes topic exposure. It supports a recognition-level lower bound.", "type": "Topic"},
+    {"level": 2, "source": "Learning outcome", "action": "Explain", "text": "Explain what the conversion rate measures and why it changes.", "reason": "The learning outcome names an action and asks learners to explain meaning.", "type": "Ability"},
+    {"level": 3, "source": "Assessment task", "action": "Calculate and apply", "text": "Calculate the conversion rate from a sample dataset and use it to compare two campaigns.", "reason": "The assessment demands application to data and gives a concrete basis for L3.", "type": "Ability"}
+  ]
+}

@@ -1,0 +1,110 @@
+@prefix kg: <https://example.org/curriculum-workforce/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+kg:a1 a kg:Assessment ;
+    rdfs:label "Evaluate performance" ;
+    kg:course kg:c1 ;
+    kg:evidence <https://example.org/curriculum-workforce/evidence/a1> ;
+    kg:limitation "The task supports evaluating performance in a bounded setting." ;
+    kg:requirement kg:r1 ;
+    kg:status "supported" .
+
+kg:a2 a kg:Assessment ;
+    rdfs:label "Optimise a campaign" ;
+    kg:course kg:c1 ;
+    kg:evidence <https://example.org/curriculum-workforce/evidence/a2> ;
+    kg:limitation "The example provides no evidence of running and monitoring a live intervention." ;
+    kg:requirement kg:r1 ;
+    kg:status "partial" .
+
+kg:a3 a kg:Assessment ;
+    rdfs:label "Analyse channel strategy" ;
+    kg:course kg:c2 ;
+    kg:evidence <https://example.org/curriculum-workforce/evidence/a3> ;
+    kg:limitation "The activity demonstrates strategic analysis within a teaching scenario." ;
+    kg:requirement kg:r2 ;
+    kg:status "partial" .
+
+kg:a4 a kg:Assessment ;
+    rdfs:label "Operate a social channel" ;
+    kg:course kg:c2 ;
+    kg:evidence <https://example.org/curriculum-workforce/evidence/a4> ;
+    kg:limitation "Ongoing publishing, moderation and operational responsibility require further evidence." ;
+    kg:requirement kg:r2 ;
+    kg:status "partial" .
+
+kg:a5 a kg:Assessment ;
+    rdfs:label "Update a production site" ;
+    kg:course kg:c3 ;
+    kg:evidence <https://example.org/curriculum-workforce/evidence/a5> ;
+    kg:limitation "The topic is relevant background. Production editing and approvals need separate evidence." ;
+    kg:requirement kg:r3 ;
+    kg:status "related" .
+
+<https://example.org/curriculum-workforce/level/1> a kg:LevelObservation ;
+    kg:action "Recognise" ;
+    kg:level 1 ;
+    kg:reason "The description establishes topic exposure. It supports a recognition-level lower bound." ;
+    kg:source "Catalogue description" ;
+    kg:text "The course introduces common campaign performance indicators." ;
+    kg:type "Topic" .
+
+<https://example.org/curriculum-workforce/level/2> a kg:LevelObservation ;
+    kg:action "Explain" ;
+    kg:level 2 ;
+    kg:reason "The learning outcome names an action and asks learners to explain meaning." ;
+    kg:source "Learning outcome" ;
+    kg:text "Explain what the conversion rate measures and why it changes." ;
+    kg:type "Ability" .
+
+<https://example.org/curriculum-workforce/level/3> a kg:LevelObservation ;
+    kg:action "Calculate and apply" ;
+    kg:level 3 ;
+    kg:reason "The assessment demands application to data and gives a concrete basis for L3." ;
+    kg:source "Assessment task" ;
+    kg:text "Calculate the conversion rate from a sample dataset and use it to compare two campaigns." ;
+    kg:type "Ability" .
+
+kg:c3 a kg:Course ;
+    rdfs:label "Web Foundations" ;
+    rdfs:comment "Learning how web pages are structured and presented." .
+
+<https://example.org/curriculum-workforce/evidence/a1> a kg:Evidence ;
+    kg:sourceType "Practice task" ;
+    kg:text "Calculate a conversion rate from sample campaign data and explain what the result indicates." .
+
+<https://example.org/curriculum-workforce/evidence/a2> a kg:Evidence ;
+    kg:sourceType "Practice task" ;
+    kg:text "Interpret the relative performance of two sets of sample results." .
+
+<https://example.org/curriculum-workforce/evidence/a3> a kg:Evidence ;
+    kg:sourceType "Learning outcome" ;
+    kg:text "Compare channel choices for a hypothetical target audience." .
+
+<https://example.org/curriculum-workforce/evidence/a4> a kg:Evidence ;
+    kg:sourceType "Learning outcome" ;
+    kg:text "Explain when to adapt the message and schedule for a different channel." .
+
+<https://example.org/curriculum-workforce/evidence/a5> a kg:Evidence ;
+    kg:sourceType "Topic outline" ;
+    kg:text "The outline introduces page structure and presentation." .
+
+kg:r3 a kg:Requirement ;
+    rdfs:label "Website maintenance" ;
+    rdfs:comment "Update a production site while following an editorial workflow." .
+
+kg:c1 a kg:Course ;
+    rdfs:label "Marketing Analytics" ;
+    rdfs:comment "Interpreting campaign performance through quantitative indicators." .
+
+kg:c2 a kg:Course ;
+    rdfs:label "Social Media Strategy" ;
+    rdfs:comment "Planning and analysing communication across social channels." .
+
+kg:r1 a kg:Requirement ;
+    rdfs:label "Campaign measurement" ;
+    rdfs:comment "Evaluate campaign performance and use the results to improve it." .
+
+kg:r2 a kg:Requirement ;
+    rdfs:label "Social channel management" ;
+    rdfs:comment "Develop a channel strategy and carry it out in an operating environment." .
