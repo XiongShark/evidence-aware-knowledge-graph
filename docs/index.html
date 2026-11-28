@@ -4,22 +4,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>课程—岗位能力对标 · Evidence-Aware Knowledge Graph</title>
-  <meta name="description" content="从课程出发看岗位要求，从岗位出发找学习路径。每条判断都能查看支持范围、能力缺口和证据出处。">
+  <meta name="description" content="从学过的课程看岗位方向，从目标岗位找下一门课。每条判断都能查看支持范围、能力缺口和证据出处。">
   <link rel="canonical" href="https://xiongshark.github.io/evidence-aware-knowledge-graph/">
   <meta property="og:title" content="课程—岗位能力对标">
-  <meta property="og:description" content="从课程出发看岗位要求，从岗位出发找学习路径。查看每条判断的证据与边界。">
+  <meta property="og:description" content="从学过的课程看岗位方向，从目标岗位找下一门课。查看每条判断的证据与边界。">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://xiongshark.github.io/evidence-aware-knowledge-graph/">
   <meta property="og:locale" content="zh_CN">
   <meta property="og:image" content="https://xiongshark.github.io/evidence-aware-knowledge-graph/share.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="课程—岗位能力对标。查看课程支持到哪、岗位还缺什么。">
+  <meta property="og:image:alt" content="从课程看岗位，从目标岗位选课。">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="课程—岗位能力对标">
-  <meta name="twitter:description" content="从课程出发看岗位要求，从岗位出发找学习路径。查看每条判断的证据与边界。">
+  <meta name="twitter:description" content="从学过的课程看岗位方向，从目标岗位找下一门课。查看每条判断的证据与边界。">
   <meta name="twitter:image" content="https://xiongshark.github.io/evidence-aware-knowledge-graph/share.png">
-  <meta name="twitter:image:alt" content="课程—岗位能力对标。查看课程支持到哪、岗位还缺什么。">
+  <meta name="twitter:image:alt" content="从课程看岗位，从目标岗位选课。">
   <link rel="stylesheet" href="./styles.css">
   <script src="./app.js" defer></script>
 </head>
@@ -35,29 +35,38 @@
     </nav>
   </header>
   <main id="top">
-    <section class="intro" aria-labelledby="headline">
+    <section class="intro" id="intro" aria-labelledby="headline">
       <div class="intro-copy">
-        <h1 id="headline">课程教过，岗位就用得上吗？</h1>
-        <p>课程说明写的是学什么，岗位描述问的是能做什么、做过什么。一条「匹配」连线看不出学到多深，也看不到判断依据。</p>
-        <p class="intro-value">这是一个可追溯证据、标明能力边界的课程—岗位对标工具。</p>
-        <a class="primary-link" href="#explore">查看一个对标案例</a>
-        <p class="intro-note">匿名示例涵盖 3 门课程和 3 项岗位要求，展示如何做判断。</p>
+        <div class="hero-switch" id="hero-switch" role="group" aria-label="选择探索方向" hidden>
+          <button type="button" data-direction="course" aria-pressed="true">从课程找方向</button>
+          <button type="button" data-direction="requirement" aria-pressed="false">按目标岗位选课</button>
+        </div>
+        <div id="hero-copy">
+          <h1 id="headline">学完这门课，<br>我能往哪走？</h1>
+          <p id="intro-description">从学过的课程出发，看它能支持哪些岗位任务，再决定下一步往哪里走。</p>
+        </div>
+        <a class="primary-link hero-link" id="begin-route" href="#explore">探索课程路线 <span aria-hidden="true">↗</span></a>
+        <p class="intro-note">以数字营销方向为例。示例课程与岗位要求均已匿名化。</p>
       </div>
-      <div class="intro-example" aria-label="营销数据分析的简短案例">
-        <p class="eyebrow">同一条岗位要求，两种判断</p>
-        <h2>营销效果评估与优化</h2>
-        <dl>
-          <dt>课程能支持</dt>
-          <dd>用样本数据评估营销效果。</dd>
-          <dt>岗位还需要</dt>
-          <dd>在真实投放中执行优化并跟踪成效。</dd>
-        </dl>
+      <div class="route-stage" id="route-stage" aria-label="探索路线预览">
+        <div class="stage-grid" aria-hidden="true"></div>
+        <canvas id="route-canvas" aria-hidden="true"></canvas>
+        <div class="stage-content">
+          <div class="stage-head"><span id="stage-label">选择一门课程</span><span class="stage-index" id="stage-index">01 / 03</span></div>
+          <div class="stage-picks" id="stage-picks" role="group" aria-label="选择预览起点" hidden></div>
+          <div class="stage-result" id="stage-result" aria-live="polite">
+            <p class="stage-caption">从课程出发</p>
+            <h2>营销数据分析</h2>
+            <p>对应营销效果评估与优化。</p>
+          </div>
+        </div>
       </div>
+      <a class="hero-scroll" href="#explore">向下探索 <span aria-hidden="true">↓</span></a>
     </section>
 
-    <section id="explore" class="section explorer" aria-labelledby="explore-heading">
+    <section id="explore" class="section explorer" data-reveal aria-labelledby="explore-heading">
       <div class="section-heading">
-        <h2 id="explore-heading">从你的问题出发</h2>
+        <h2 id="explore-heading">把路线拆开看</h2>
         <p>点选一条判断，看课程能支持到哪，以及还缺什么证据。</p>
       </div>
       <div id="interactive-tools" class="toolbar" hidden>
@@ -65,6 +74,9 @@
           <button type="button" data-direction="course" aria-pressed="true">学完这门课，对应哪些岗位要求？</button>
           <button type="button" data-direction="requirement" aria-pressed="false">这项岗位要求，哪些课能帮上忙？</button>
         </div>
+      </div>
+      <div class="filters" id="route-filters" hidden>
+        <label class="filter"><span id="entry-label">课程</span><select id="entry-filter" aria-labelledby="entry-label"></select></label>
         <label class="filter">支持程度
           <select id="support-filter">
             <option value="all">全部判断</option>
@@ -86,12 +98,12 @@
             <h3 id="detail-title">评估营销效果</h3>
             <p class="route">营销数据分析 → 营销效果评估与优化</p>
             <div class="comparison">
-              <div><h4>支持到哪</h4><p>课程要求完成一次有明确范围的营销效果评估，包含计算指标和解读结果。</p></div>
+              <div><h4>支持到哪</h4><p>课程要求用给定方法计算指标，并据此填写一份有明确范围的营销效果报告。</p></div>
               <div><h4>还缺什么</h4><p>真实投放中的预算决策、执行优化和监测结果，还需要项目或实务证据。</p></div>
             </div>
             <a class="level-link" href="#level-3">查看 L3 等级示例</a>
             <details class="source"><summary>查看两侧出处</summary>
-              <dl><dt>课程 · 考核任务</dt><dd>独立用样本数据计算转化率，比较两组营销活动并说明结果。</dd>
+              <dl><dt>课程 · 考核任务</dt><dd>应用给定的计算方法，用样本投放数据计算转化率并填写效果报告。</dd>
                 <dt>岗位 · 岗位描述</dt><dd>评估营销活动成效，依据结果制定并执行优化措施。</dd></dl>
               <p class="footnote">两段引文均为匿名演示材料。</p>
             </details>
@@ -102,22 +114,25 @@
       <noscript><p class="footnote">上方是静态案例。启用 JavaScript 后可以切换视角和筛选。</p></noscript>
     </section>
 
-    <section id="levels" class="section levels" aria-labelledby="levels-heading">
+    <section id="levels" class="section levels" data-reveal aria-labelledby="levels-heading">
       <div class="section-heading">
-        <h2 id="levels-heading">证据如何说明学到哪一步</h2>
-        <p>以营销数据为例，材料里要求完成的动作越明确，能判断的任务深度就越具体。</p>
+        <h2 id="levels-heading">学到了什么程度？</h2>
+        <p>点亮一个等级，看看同一个主题在五层任务里分别要求做什么。</p>
       </div>
       <div id="level-list" class="level-list" role="group" aria-label="选择证据等级" hidden></div>
       <div id="level-detail" class="level-detail" aria-live="polite" hidden></div>
       <div id="static-levels" class="static-levels">
-        <article id="level-1"><h3>L1 · 了解概念</h3><p>目录描述介绍常用营销指标。</p></article>
-        <article id="level-2"><h3>L2 · 辅助实践</h3><p>引导练习要求按给定步骤说明指标差异。</p></article>
-        <article id="level-3"><h3>L3 · 独立交付（模拟）</h3><p>考核要求独立用样本数据完成一份效果评估。</p></article>
+        <article id="level-1"><h3>L1 · 了解</h3><p>认识营销指标</p></article>
+        <article id="level-2"><h3>L2 · 理解</h3><p>解释指标含义</p></article>
+        <article id="level-3"><h3>L3 · 应用</h3><p>用方法完成任务</p></article>
+        <article id="level-4"><h3>L4 · 分析与评价</h3><p>比较并论证选择</p></article>
+        <article id="level-5"><h3>L5 · 设计与创造</h3><p>设计一套实验方案</p></article>
       </div>
+      <p class="footnote">每一级的任务都是独立匿名示例。这里的五级衡量课程任务深度，图谱中的三类支持判断衡量课程和岗位要求之间的关系。</p>
       <p class="level-boundary"><strong>课程任务深度 ≠ 个人掌握程度</strong>。个人能否胜任仍需通过其实际表现、作品或实务经验核验。</p>
     </section>
 
-    <section id="technical" class="section technique" aria-labelledby="technical-heading">
+    <section id="technical" class="section technique" data-reveal aria-labelledby="technical-heading">
       <div class="section-heading">
         <h2 id="technical-heading">技术实现</h2>
         <a class="primary-link technical-download" href="./data/graph.ttl" download>下载匿名 RDF</a>

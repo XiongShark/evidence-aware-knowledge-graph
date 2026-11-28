@@ -29,6 +29,7 @@ def make_graph(sample):
             graph.add((KG[identifier], RDF.type, rdf_class))
             graph.add((KG[identifier], RDFS.label, Literal(item["label"])))
             graph.add((KG[identifier], RDFS.comment, Literal(item["summary"])))
+    assert [item["level"] for item in sample["levels"]] == [1, 2, 3, 4, 5]
     level_numbers = {item["level"] for item in sample["levels"]}
     for item in sample["assessments"]:
         identifier = item["id"]
