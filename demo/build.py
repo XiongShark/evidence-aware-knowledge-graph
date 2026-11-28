@@ -29,6 +29,7 @@ def make_graph(sample):
             graph.add((KG[identifier], RDF.type, rdf_class))
             graph.add((KG[identifier], RDFS.label, Literal(item["label"])))
             graph.add((KG[identifier], RDFS.comment, Literal(item["summary"])))
+    level_numbers = {item["level"] for item in sample["levels"]}
     for item in sample["assessments"]:
         identifier = item["id"]
         assert identifier not in occupied, f"Duplicate identifier: {identifier}"
@@ -44,14 +45,19 @@ def make_graph(sample):
         graph.add((assessment, KG.requirement, KG[item["requirement"]]))
         graph.add((assessment, KG.status, Literal(item["status"])))
         graph.add((assessment, KG.evidence, evidence))
+        graph.add((assessment, KG.supportedScope, Literal(item["support"])))
         graph.add((assessment, KG.limitation, Literal(item["limit"])))
+        level = item.get("level")
+        if level is not None:
+            assert level in level_numbers, identifier
+            graph.add((assessment, KG.relatedLevel, KG[f"level/{level}"]))
         graph.add((evidence, RDF.type, KG.Evidence))
         graph.add((evidence, KG.sourceType, Literal(item["source"])))
         graph.add((evidence, KG.text, Literal(item["evidence"])))
     for item in sample["levels"]:
         observation = KG[f"level/{item['level']}"]
         graph.add((observation, RDF.type, KG.LevelObservation))
-        for key in ("level", "source", "action", "text", "reason", "type"):
+        for key in ("level", "stage", "source", "action", "text", "reason", "type"):
             graph.add((observation, KG[key], Literal(item[key])))
     return graph
 
@@ -65,13 +71,16 @@ def verify(graph):
     assert [tuple(int(value) for value in row) for row in rows] == [(5, 3)]
     paths = list(graph.query((HERE / "queries" / "evidence.rq").read_text()))
     assert len(paths) == 5
+    gaps = list(graph.query((HERE / "queries" / "partial-gaps.rq").read_text()))
+    assert len(gaps) == 3 and len({row.requirement for row in gaps}) == 2
     assessment = next(graph.subjects(RDF.type, KG.Assessment))
-    broken = Graph()
-    for triple in graph:
-        broken.add(triple)
-    broken.remove((assessment, KG.evidence, None))
-    conforms, _, _ = validate(broken, shacl_graph=shapes)
-    assert not conforms, "Missing evidence must fail validation"
+    for predicate in (KG.evidence, KG.limitation):
+        broken = Graph()
+        for triple in graph:
+            broken.add(triple)
+        broken.remove((assessment, predicate, None))
+        conforms, _, _ = validate(broken, shacl_graph=shapes)
+        assert not conforms, f"Missing {predicate} must fail validation"
 
 
 def main():
@@ -90,7 +99,7 @@ def main():
         (OUT / "graph.json").write_text(graph_json, encoding="utf-8")
         turtle = graph.serialize(format="turtle").rstrip() + "\n"
         (OUT / "graph.ttl").write_text(turtle, encoding="utf-8")
-    print("Verified five evidence paths, three distinct requirements, and missing-evidence detection.")
+    print("Verified five evidence paths, three distinct requirements, three partial judgments, and missing-evidence/limitation detection.")
 
 
 if __name__ == "__main__":

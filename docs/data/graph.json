@@ -2,35 +2,35 @@
   "courses": [
     {
       "id": "c1",
-      "label": "Marketing Analytics",
-      "summary": "Interpreting campaign performance through quantitative indicators."
+      "label": "营销数据分析",
+      "summary": "用指标读懂营销活动的表现。"
     },
     {
       "id": "c2",
-      "label": "Social Media Strategy",
-      "summary": "Planning and analysing communication across social channels."
+      "label": "社交媒体策略",
+      "summary": "理解不同受众与渠道的传播策略。"
     },
     {
       "id": "c3",
-      "label": "Web Foundations",
-      "summary": "Learning how web pages are structured and presented."
+      "label": "网页设计基础",
+      "summary": "了解网页结构和页面呈现。"
     }
   ],
   "requirements": [
     {
       "id": "r1",
-      "label": "Campaign measurement",
-      "summary": "Evaluate campaign performance and use the results to improve it."
+      "label": "营销效果评估与优化",
+      "summary": "评估营销活动成效，依据结果制定并执行优化措施。"
     },
     {
       "id": "r2",
-      "label": "Social channel management",
-      "summary": "Develop a channel strategy and carry it out in an operating environment."
+      "label": "社交渠道运营",
+      "summary": "制定社交渠道策略，负责实际发布、互动和持续运营。"
     },
     {
       "id": "r3",
-      "label": "Website maintenance",
-      "summary": "Update a production site while following an editorial workflow."
+      "label": "网站内容维护",
+      "summary": "按编辑审批流程更新生产网站内容。"
     }
   ],
   "assessments": [
@@ -39,76 +39,86 @@
       "course": "c1",
       "requirement": "r1",
       "status": "supported",
-      "label": "Evaluate performance",
-      "source": "Practice task",
-      "evidence": "Calculate a conversion rate from sample campaign data and explain what the result indicates.",
-      "limit": "The task supports evaluating performance in a bounded setting."
+      "label": "评估营销效果",
+      "source": "考核任务",
+      "evidence": "独立用样本数据计算转化率，比较两组营销活动并说明结果。",
+      "support": "课程要求完成一次有明确范围的营销效果评估，包含计算指标和解读结果。",
+      "limit": "真实投放中的预算决策、执行优化和监测结果，还需要项目或实务证据。",
+      "level": 3
     },
     {
       "id": "a2",
       "course": "c1",
       "requirement": "r1",
       "status": "partial",
-      "label": "Optimise a campaign",
-      "source": "Practice task",
-      "evidence": "Interpret the relative performance of two sets of sample results.",
-      "limit": "The example provides no evidence of running and monitoring a live intervention."
+      "label": "优化营销活动",
+      "source": "引导练习",
+      "evidence": "参照给出的解读步骤，说明两组样本指标的差异。",
+      "support": "能为发现活动问题提供指标解读基础。",
+      "limit": "仍需证明能选定优化方案、执行干预并跟踪效果。",
+      "level": 2
     },
     {
       "id": "a3",
       "course": "c2",
       "requirement": "r2",
       "status": "partial",
-      "label": "Analyse channel strategy",
-      "source": "Learning outcome",
-      "evidence": "Compare channel choices for a hypothetical target audience.",
-      "limit": "The activity demonstrates strategic analysis within a teaching scenario."
+      "label": "分析渠道策略",
+      "source": "学习成果",
+      "evidence": "针对模拟目标受众，比较两个社交渠道的选择依据。",
+      "support": "课程材料支持分析受众和渠道的适配性。",
+      "limit": "仍需结合真实账号、品牌约束和业务目标制定策略。"
     },
     {
       "id": "a4",
       "course": "c2",
       "requirement": "r2",
       "status": "partial",
-      "label": "Operate a social channel",
-      "source": "Learning outcome",
-      "evidence": "Explain when to adapt the message and schedule for a different channel.",
-      "limit": "Ongoing publishing, moderation and operational responsibility require further evidence."
+      "label": "负责日常运营",
+      "source": "学习成果",
+      "evidence": "说明调整发布内容和时间的适用情境。",
+      "support": "课程内容可以帮助理解发布计划中的常见决策。",
+      "limit": "实际发布、用户互动和持续运营经验需要另外核验。"
     },
     {
       "id": "a5",
       "course": "c3",
       "requirement": "r3",
       "status": "related",
-      "label": "Update a production site",
-      "source": "Topic outline",
-      "evidence": "The outline introduces page structure and presentation.",
-      "limit": "The topic is relevant background. Production editing and approvals need separate evidence."
+      "label": "更新生产网站",
+      "source": "课程主题",
+      "evidence": "课程介绍网页结构和页面呈现。",
+      "support": "提供阅读和理解网页的背景知识。",
+      "limit": "课程材料尚无生产网站编辑、审批流转或上线操作的直接证据。"
     }
   ],
   "levels": [
     {
       "level": 1,
-      "source": "Catalogue description",
-      "action": "Recognise",
-      "text": "The course introduces common campaign performance indicators.",
-      "reason": "The description establishes topic exposure. It supports a recognition-level lower bound.",
-      "type": "Topic"
+      "stage": "了解概念",
+      "source": "目录描述",
+      "action": "识别常用指标",
+      "text": "课程介绍常见营销活动指标。",
+      "reason": "材料说明课程会接触这一主题，缺少明确的操作任务。",
+      "type": "主题"
     },
     {
       "level": 2,
-      "source": "Learning outcome",
-      "action": "Explain",
-      "text": "Explain what the conversion rate measures and why it changes.",
-      "reason": "The learning outcome names an action and asks learners to explain meaning.",
-      "type": "Ability"
+      "stage": "辅助实践",
+      "source": "学习成果与引导练习",
+      "action": "按给定步骤解释指标差异",
+      "text": "参照给出的解读步骤，说明两组样本指标的差异。",
+      "reason": "材料要求解释指标，并且给出操作步骤；证据覆盖有指导的任务。",
+      "type": "能力"
     },
     {
       "level": 3,
-      "source": "Assessment task",
-      "action": "Calculate and apply",
-      "text": "Calculate the conversion rate from a sample dataset and use it to compare two campaigns.",
-      "reason": "The assessment demands application to data and gives a concrete basis for L3.",
-      "type": "Ability"
+      "stage": "独立交付（模拟）",
+      "source": "考核任务",
+      "action": "独立完成一份效果评估",
+      "text": "独立用样本数据计算转化率，比较两组营销活动并说明结果。",
+      "reason": "任务要求独立计算、比较并说明结果，课程证据覆盖一次限定范围的模拟交付。",
+      "type": "能力"
     }
   ]
 }

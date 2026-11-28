@@ -8,7 +8,8 @@ kg:AssessmentShape
     sh:property [ sh:path kg:course ; sh:class kg:Course ; sh:minCount 1 ; sh:maxCount 1 ] ;
     sh:property [ sh:path kg:requirement ; sh:class kg:Requirement ; sh:minCount 1 ; sh:maxCount 1 ] ;
     sh:property [ sh:path kg:status ; sh:in ("supported" "partial" "related") ; sh:minCount 1 ; sh:maxCount 1 ] ;
-    sh:property [ sh:path kg:evidence ; sh:class kg:Evidence ; sh:minCount 1 ; sh:maxCount 1 ] .
+    sh:property [ sh:path kg:evidence ; sh:class kg:Evidence ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path kg:limitation ; sh:datatype xsd:string ; sh:minLength 1 ; sh:minCount 1 ; sh:maxCount 1 ] .
 
 kg:EvidenceShape
     a sh:NodeShape ;

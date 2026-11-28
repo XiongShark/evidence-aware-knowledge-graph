@@ -1,9 +1,9 @@
 "use strict";
 
 const statuses = {
-  supported: "Supported scope",
-  partial: "Partial support",
-  related: "Related only"
+  supported: "支持明确",
+  partial: "部分支持",
+  related: "仅相关"
 };
 const columns = document.querySelector("#columns");
 const filter = document.querySelector("#support-filter");
@@ -24,31 +24,63 @@ function element(tag, text, className) {
 
 async function start() {
   const response = await fetch("./data/graph.json");
-  if (!response.ok) throw new Error("The sample could not be loaded.");
+  if (!response.ok) throw new Error("样例数据加载失败");
   const sample = await response.json();
   const courses = new Map(sample.courses.map(item => [item.id, item]));
   const requirements = new Map(sample.requirements.map(item => [item.id, item]));
-  document.querySelector("#course-count").textContent = courses.size;
-  document.querySelector("#assessment-count").textContent = sample.assessments.length;
-  document.querySelector("#requirement-count").textContent = requirements.size;
+  const levelRecords = new Map(sample.levels.map(item => [item.level, item]));
+  const levelButtons = new Map();
+  const counts = new Map(Object.keys(statuses).map(status => [status, 0]));
+  for (const item of sample.assessments) counts.set(item.status, counts.get(item.status) + 1);
+  for (const option of filter.options) {
+    const count = option.value === "all" ? sample.assessments.length : counts.get(option.value);
+    option.textContent = `${option.textContent}（${count}）`;
+    option.disabled = count === 0;
+  }
   let direction = "course";
   let visible = sample.assessments;
   let selection = visible[0].id;
   let nodeButtons = new Map();
 
   function showDetail(assessment) {
+    const requirement = requirements.get(assessment.requirement);
+    const course = courses.get(assessment.course);
     const heading = element("h3", assessment.label);
     heading.id = "detail-title";
-    const label = element("p", statuses[assessment.status], assessment.status);
-    const path = element("p", courses.get(assessment.course).label + " → " + requirements.get(assessment.requirement).label, "route");
-    const descriptions = element("dl");
-    descriptions.append(
-      element("dt", assessment.source),
+    const label = element("p", statuses[assessment.status], "status-badge " + assessment.status);
+    const route = direction === "course"
+      ? `${course.label} → ${requirement.label}`
+      : `${requirement.label} → ${course.label}`;
+    const comparison = element("div", null, "comparison");
+    for (const [title, text] of [["支持到哪", assessment.support], ["还缺什么", assessment.limit]]) {
+      const block = element("div");
+      block.append(element("h4", title), element("p", text));
+      comparison.append(block);
+    }
+    const sources = element("details", null, "source");
+    const citations = element("dl");
+    citations.append(
+      element("dt", "课程 · " + assessment.source),
       element("dd", assessment.evidence),
-      element("dt", "Scope and limits"),
-      element("dd", assessment.limit)
+      element("dt", "岗位 · 岗位描述"),
+      element("dd", requirement.summary)
     );
-    detail.replaceChildren(heading, label, path, descriptions);
+    sources.append(
+      element("summary", "查看两侧出处"),
+      citations,
+      element("p", "两段引文均为匿名演示材料。", "footnote")
+    );
+    detail.replaceChildren(label, heading, element("p", route, "route"), comparison);
+    if (levelRecords.has(assessment.level)) {
+      const link = element("a", `查看 L${assessment.level} 等级示例`, "level-link");
+      link.href = `#level-${assessment.level}`;
+      link.addEventListener("click", () => {
+        showLevel(assessment.level);
+        levelButtons.get(assessment.level).focus({ preventScroll: true });
+      });
+      detail.append(link);
+    }
+    detail.append(sources);
   }
 
   function drawEdges() {
@@ -104,7 +136,7 @@ async function start() {
       button.type = "button";
       button.setAttribute("aria-pressed", "false");
       if (kind === "judgment") {
-        button.append(element("span", statuses[entry.status], "node-status " + entry.status));
+        button.append(element("span", " " + statuses[entry.status], "node-status " + entry.status));
       }
       if (entry.summary) button.title = entry.summary;
       button.addEventListener("click", () => {
@@ -123,12 +155,12 @@ async function start() {
     visible = sample.assessments.filter(item => filter.value === "all" || item.status === filter.value);
     nodeButtons = new Map();
     const matches = (key, items) => items.filter(entry => visible.some(item => item[key] === entry.id));
-    const left = makeColumn("Courses", matches("course", sample.courses), "course");
-    const center = makeColumn("Support judgments", visible, "judgment");
-    const right = makeColumn("Requirements", matches("requirement", sample.requirements), "requirement");
+    const left = makeColumn("课程", matches("course", sample.courses), "course");
+    const center = makeColumn("支持判断", visible, "judgment");
+    const right = makeColumn("岗位要求", matches("requirement", sample.requirements), "requirement");
     columns.replaceChildren(...(direction === "course" ? [left, center, right] : [right, center, left]));
     const count = new Set(visible.map(item => item.requirement)).size;
-    resultCount.textContent = `${visible.length} visible judgment${visible.length === 1 ? "" : "s"} · ${count} distinct requirement${count === 1 ? "" : "s"}`;
+    resultCount.textContent = `当前 ${visible.length} 条判断，按原始要求去重为 ${count} 项。`;
     const record = visible.find(item => item.id === selection) || visible[0];
     if (record) select(record);
   }
@@ -141,32 +173,44 @@ async function start() {
     });
   }
   filter.addEventListener("change", render);
-  new ResizeObserver(drawEdges).observe(graph);
-  render();
-
-  function showLevel(selected) {
-    const record = sample.levels[selected];
-    const detailLabel = `${record.type} · L${record.level}`;
+  function showLevel(number) {
+    const record = levelRecords.get(number);
+    if (!record) return;
     levelDetail.replaceChildren(
-      element("p", detailLabel, "eyebrow"),
+      element("p", `L${record.level} · ${record.source} · ${record.type}`, "eyebrow"),
       element("h3", record.action),
       element("blockquote", record.text),
       element("p", record.reason)
     );
-    [...levels.children].forEach((button, i) => button.setAttribute("aria-pressed", String(i === selected)));
+    for (const [key, button] of levelButtons) button.setAttribute("aria-pressed", String(key === number));
   }
-  sample.levels.forEach((record, i) => {
+
+  document.querySelector("#static-levels").remove();
+  for (const record of sample.levels) {
     const button = element("button");
     button.type = "button";
-    button.append(element("span", "L" + record.level, "level-chip"), element("span", record.source));
-    button.addEventListener("click", () => showLevel(i));
+    button.id = `level-${record.level}`;
+    button.append(element("span", "L" + record.level, "level-chip"), document.createTextNode(" "), element("span", record.stage));
+    button.addEventListener("click", () => showLevel(record.level));
+    levelButtons.set(record.level, button);
     levels.append(button);
-  });
-  showLevel(0);
+  }
+  function syncLevelLink() {
+    const match = /^#level-(\d+)$/.exec(location.hash);
+    if (match) showLevel(Number(match[1]));
+  }
+  window.addEventListener("hashchange", syncLevelLink);
+  levels.hidden = false;
+  levelDetail.hidden = false;
+  showLevel(sample.levels[0].level);
+  syncLevelLink();
+  document.querySelector("#interactive-tools").hidden = false;
+  document.querySelector("#explorer-body").classList.add("interactive");
+  graph.hidden = false;
+  render();
+  new ResizeObserver(drawEdges).observe(graph);
 }
 
 start().catch(() => {
-  const heading = element("h3", "Sample unavailable");
-  heading.id = "detail-title";
-  detail.replaceChildren(heading, element("p", "Reload the page or use the RDF download."));
+  resultCount.textContent = "互动数据暂时无法加载，上方仍可查看默认案例。";
 });

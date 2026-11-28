@@ -1,63 +1,183 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Explore how learning evidence supports workforce requirements in an illustrative knowledge graph.">
-  <title>Evidence-Aware Knowledge Graph</title>
+  <title>课程—岗位能力对标 · Evidence-Aware Knowledge Graph</title>
+  <meta name="description" content="从课程出发看岗位要求，从岗位出发找学习路径。每条判断都能查看支持范围、能力缺口和证据出处。">
+  <link rel="canonical" href="https://xiongshark.github.io/evidence-aware-knowledge-graph/">
+  <meta property="og:title" content="课程—岗位能力对标">
+  <meta property="og:description" content="从课程出发看岗位要求，从岗位出发找学习路径。查看每条判断的证据与边界。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://xiongshark.github.io/evidence-aware-knowledge-graph/">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:image" content="https://xiongshark.github.io/evidence-aware-knowledge-graph/share.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="课程—岗位能力对标。查看课程支持到哪、岗位还缺什么。">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="课程—岗位能力对标">
+  <meta name="twitter:description" content="从课程出发看岗位要求，从岗位出发找学习路径。查看每条判断的证据与边界。">
+  <meta name="twitter:image" content="https://xiongshark.github.io/evidence-aware-knowledge-graph/share.png">
+  <meta name="twitter:image:alt" content="课程—岗位能力对标。查看课程支持到哪、岗位还缺什么。">
   <link rel="stylesheet" href="./styles.css">
   <script src="./app.js" defer></script>
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">✣</span> Evidence-Aware KG</a>
-    <nav aria-label="Main navigation"><a href="#explore">Explore</a><a href="#levels">Evidence levels</a><a href="./data/graph.ttl" download>Download RDF</a></nav>
+    <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">✣</span> 课程—岗位能力对标</a>
+    <nav aria-label="主导航">
+      <a href="#explore">对标体验</a>
+      <a href="#levels">证据等级</a>
+      <a href="#technical">技术实现</a>
+      <a href="https://github.com/XiongShark/evidence-aware-knowledge-graph">GitHub</a>
+      <a href="./data/graph.ttl" download>下载图谱</a>
+    </nav>
   </header>
   <main id="top">
     <section class="intro" aria-labelledby="headline">
       <div class="intro-copy">
-        <p class="eyebrow">CROSS-SYSTEM SEMANTIC INTEGRATION</p>
-        <h1 id="headline">Evidence-Aware<br>Knowledge Graph</h1>
-        <p>Trace how curriculum evidence supports workforce requirements. Explore the judgments, source material and limits behind each connection.</p>
-        <a class="primary-link" href="#explore">Explore the graph</a>
+        <h1 id="headline">课程教过，岗位就用得上吗？</h1>
+        <p>课程说明写的是学什么，岗位描述问的是能做什么、做过什么。一条「匹配」连线看不出学到多深，也看不到判断依据。</p>
+        <p class="intro-value">这是一个可追溯证据、标明能力边界的课程—岗位对标工具。</p>
+        <a class="primary-link" href="#explore">查看一个对标案例</a>
+        <p class="intro-note">匿名示例涵盖 3 门课程和 3 项岗位要求，展示如何做判断。</p>
       </div>
-      <div class="intro-stats" aria-label="Illustrative case at a glance">
-        <div><strong id="course-count">3</strong><span>course examples</span></div>
-        <div><strong id="assessment-count">5</strong><span>support judgments</span></div>
-        <div><strong id="requirement-count">3</strong><span>distinct requirements</span></div>
+      <div class="intro-example" aria-label="营销数据分析的简短案例">
+        <p class="eyebrow">同一条岗位要求，两种判断</p>
+        <h2>营销效果评估与优化</h2>
+        <dl>
+          <dt>课程能支持</dt>
+          <dd>用样本数据评估营销效果。</dd>
+          <dt>岗位还需要</dt>
+          <dd>在真实投放中执行优化并跟踪成效。</dd>
+        </dl>
       </div>
     </section>
+
     <section id="explore" class="section explorer" aria-labelledby="explore-heading">
-      <div class="section-heading"><div><p class="eyebrow">ILLUSTRATIVE CASE</p><h2 id="explore-heading">Explore the evidence</h2></div><p>Pick a connection to see what supports it and where that support ends.</p></div>
-      <div class="toolbar">
-        <div class="segmented" role="group" aria-label="Graph perspective">
-          <button type="button" data-direction="course" aria-pressed="true">Course first</button>
-          <button type="button" data-direction="requirement" aria-pressed="false">Requirement first</button>
-        </div>
-        <label class="filter">Support <select id="support-filter"><option value="all">All judgments</option><option value="supported">Supported scope</option><option value="partial">Partial support</option><option value="related">Related only</option></select></label>
+      <div class="section-heading">
+        <h2 id="explore-heading">从你的问题出发</h2>
+        <p>点选一条判断，看课程能支持到哪，以及还缺什么证据。</p>
       </div>
-      <div class="explorer-body">
-        <div class="graph" id="graph">
+      <div id="interactive-tools" class="toolbar" hidden>
+        <div class="segmented" role="group" aria-label="选择对标视角">
+          <button type="button" data-direction="course" aria-pressed="true">学完这门课，对应哪些岗位要求？</button>
+          <button type="button" data-direction="requirement" aria-pressed="false">这项岗位要求，哪些课能帮上忙？</button>
+        </div>
+        <label class="filter">支持程度
+          <select id="support-filter">
+            <option value="all">全部判断</option>
+            <option value="supported">支持明确</option>
+            <option value="partial">部分支持</option>
+            <option value="related">仅相关</option>
+          </select>
+        </label>
+      </div>
+      <div class="explorer-body" id="explorer-body">
+        <div class="graph" id="graph" hidden>
           <canvas id="edges" aria-hidden="true"></canvas>
           <div id="columns" class="columns"></div>
         </div>
         <aside class="details" aria-labelledby="detail-title">
-          <p class="eyebrow">SELECTED CONNECTION</p>
-          <div id="detail" aria-live="polite"><h3 id="detail-title">Loading sample…</h3></div>
+          <p class="eyebrow">对标判断</p>
+          <div id="detail" aria-live="polite">
+            <p class="status-badge supported">支持明确</p>
+            <h3 id="detail-title">评估营销效果</h3>
+            <p class="route">营销数据分析 → 营销效果评估与优化</p>
+            <div class="comparison">
+              <div><h4>支持到哪</h4><p>课程要求完成一次有明确范围的营销效果评估，包含计算指标和解读结果。</p></div>
+              <div><h4>还缺什么</h4><p>真实投放中的预算决策、执行优化和监测结果，还需要项目或实务证据。</p></div>
+            </div>
+            <a class="level-link" href="#level-3">查看 L3 等级示例</a>
+            <details class="source"><summary>查看两侧出处</summary>
+              <dl><dt>课程 · 考核任务</dt><dd>独立用样本数据计算转化率，比较两组营销活动并说明结果。</dd>
+                <dt>岗位 · 岗位描述</dt><dd>评估营销活动成效，依据结果制定并执行优化措施。</dd></dl>
+              <p class="footnote">两段引文均为匿名演示材料。</p>
+            </details>
+          </div>
         </aside>
       </div>
       <p class="footnote" id="result-count" role="status"></p>
-      <noscript><p>Enable JavaScript to explore, or download the RDF sample.</p></noscript>
+      <noscript><p class="footnote">上方是静态案例。启用 JavaScript 后可以切换视角和筛选。</p></noscript>
     </section>
+
     <section id="levels" class="section levels" aria-labelledby="levels-heading">
-      <div class="section-heading"><div><p class="eyebrow">EVIDENCE MODEL</p><h2 id="levels-heading">How the level changes</h2></div><p>Follow one illustrative topic as the available material specifies more demanding actions.</p></div>
-      <div class="levels-body">
-        <div class="level-list" id="level-list" role="group" aria-label="Select a source"></div>
-        <div class="level-detail" id="level-detail" aria-live="polite"></div>
+      <div class="section-heading">
+        <h2 id="levels-heading">证据如何说明学到哪一步</h2>
+        <p>以营销数据为例，材料里要求完成的动作越明确，能判断的任务深度就越具体。</p>
       </div>
-      <p class="footnote">A level describes the task depth supported by the material. Individual attainment requires separate evidence.</p>
+      <div id="level-list" class="level-list" role="group" aria-label="选择证据等级" hidden></div>
+      <div id="level-detail" class="level-detail" aria-live="polite" hidden></div>
+      <div id="static-levels" class="static-levels">
+        <article id="level-1"><h3>L1 · 了解概念</h3><p>目录描述介绍常用营销指标。</p></article>
+        <article id="level-2"><h3>L2 · 辅助实践</h3><p>引导练习要求按给定步骤说明指标差异。</p></article>
+        <article id="level-3"><h3>L3 · 独立交付（模拟）</h3><p>考核要求独立用样本数据完成一份效果评估。</p></article>
+      </div>
+      <p class="level-boundary"><strong>课程任务深度 ≠ 个人掌握程度</strong>。个人能否胜任仍需通过其实际表现、作品或实务经验核验。</p>
+    </section>
+
+    <section id="technical" class="section technique" aria-labelledby="technical-heading">
+      <div class="section-heading">
+        <h2 id="technical-heading">技术实现</h2>
+        <a class="primary-link technical-download" href="./data/graph.ttl" download>下载匿名 RDF</a>
+      </div>
+      <div class="technical-grid">
+        <article>
+          <h3>建模与溯源</h3>
+          <p>课程和岗位分别维护 SKOS 能力词表，通过带复核状态的能力映射建立联系。RDF 将断言和支持判断建成独立资源，支持从判断回溯两侧的证据与来源偏移。OWL 定义分类和关系，SHACL 检查必填信息与证据引用。</p>
+          <p>同一岗位要求可拆出多条判断。汇总时按原始要求标识去重，保留各自的支持范围和欠缺条件。</p>
+        </article>
+        <article>
+          <h3>项目验证范围</h3>
+          <p>候选图谱覆盖 <strong>33 门课程、100 个岗位实例</strong>。百岗候选图按既定策略保留 1,714 条警告，SHACL 违规为 0。另在历史五岗基线上验证了 18 个注入故障及其恢复。两项实验范围各自独立。</p>
+          <p>网页中的匿名样例用于展示决策流程。约束通过说明数据结构满足校验条件，判断内容仍需结合来源复核。</p>
+        </article>
+      </div>
+      <details class="code-example">
+        <summary>SHACL · 每条判断须有证据和边界说明</summary>
+        <pre><code data-snippet="shape">@prefix kg: &lt;https://example.org/curriculum-workforce/&gt; .
+@prefix sh: &lt;http://www.w3.org/ns/shacl#&gt; .
+@prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt; .
+
+kg:AssessmentShape a sh:NodeShape ;
+    sh:targetClass kg:Assessment ;
+    sh:property [ sh:path kg:evidence ; sh:class kg:Evidence ;
+                  sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path kg:limitation ; sh:datatype xsd:string ;
+                  sh:minLength 1 ; sh:minCount 1 ; sh:maxCount 1 ] .</code></pre>
+        <p><a href="https://github.com/XiongShark/evidence-aware-knowledge-graph/blob/main/demo/shapes.ttl">查看完整的验证规则</a></p>
+      </details>
+      <details class="code-example">
+        <summary>SPARQL · 查找部分支持的要求及缺口</summary>
+        <pre><code data-snippet="partial">PREFIX kg: &lt;https://example.org/curriculum-workforce/&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+
+SELECT ?requirement ?course ?judgment ?gap
+WHERE {
+  ?assessment a kg:Assessment ;
+              kg:status &quot;partial&quot; ;
+              kg:requirement/rdfs:label ?requirement ;
+              kg:course/rdfs:label ?course ;
+              rdfs:label ?judgment ;
+              kg:limitation ?gap .
+}
+ORDER BY ?requirement ?judgment</code></pre>
+        <p>匿名样例中返回 3 条判断，涉及 2 项原始岗位要求。</p>
+      </details>
+      <details class="code-example">
+        <summary>SPARQL · 区分判断条数与原始要求数</summary>
+        <pre><code data-snippet="counts">PREFIX kg: &lt;https://example.org/curriculum-workforce/&gt;
+SELECT (COUNT(DISTINCT ?assessment) AS ?assessments)
+       (COUNT(DISTINCT ?requirement) AS ?requirements)
+WHERE {
+  ?assessment a kg:Assessment ;
+              kg:requirement ?requirement .
+}</code></pre>
+        <p>匿名样例中 5 条判断去重后对应 3 项原始岗位要求。</p>
+      </details>
     </section>
   </main>
-  <footer><span>Evidence-Aware Knowledge Graph</span><span>Illustrative data · RDF / SPARQL / SHACL</span></footer>
+  <footer><span>课程—岗位能力对标</span><span> · Evidence-Aware Knowledge Graph</span></footer>
 </body>
 </html>

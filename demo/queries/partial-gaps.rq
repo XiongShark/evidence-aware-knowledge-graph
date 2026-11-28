@@ -1,0 +1,13 @@
+PREFIX kg: <https://example.org/curriculum-workforce/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?requirement ?course ?judgment ?gap
+WHERE {
+  ?assessment a kg:Assessment ;
+              kg:status "partial" ;
+              kg:requirement/rdfs:label ?requirement ;
+              kg:course/rdfs:label ?course ;
+              rdfs:label ?judgment ;
+              kg:limitation ?gap .
+}
+ORDER BY ?requirement ?judgment
